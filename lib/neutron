@@ -421,7 +421,8 @@ function create_neutron_initial_network {
             # logic is specific to using the l3-agent for l3
             if is_neutron_ovs_base_plugin && [[ "$Q_USE_NAMESPACE" = "True" ]]; then
                 CIDR_LEN=${FLOATING_RANGE#*/}
-                sudo ip addr add $EXT_GW_IP/$CIDR_LEN dev $PUBLIC_BRIDGE
+                # Commented this line due to the IP conflict problem that br-ex is trying to obtain 192.168.1.1
+                #sudo ip addr add $EXT_GW_IP/$CIDR_LEN dev $PUBLIC_BRIDGE
                 sudo ip link set $PUBLIC_BRIDGE up
                 ROUTER_GW_IP=`neutron port-list -c fixed_ips -c device_owner | grep router_gateway | awk -F '"' '{ print $8; }'`
                 die_if_not_set $LINENO ROUTER_GW_IP "Failure retrieving ROUTER_GW_IP"
