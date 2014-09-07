@@ -538,7 +538,7 @@ function create_nova_conf {
         iniset $NOVA_CONF spice html5proxy_base_url "$SPICEHTML5PROXY_URL"
     fi
 
-    if is_service_enabled n-novnc || is_service_enabled n-xvnc; then
+    if is_service_enabled n-novnc || is_service_enabled n-xvnc || [ "$MULTI_HOST" == "True" ]; then
         # Address on which instance vncservers will listen on compute hosts.
         # For multi-host, this should be the management ip of the compute host.
         VNCSERVER_LISTEN=${VNCSERVER_LISTEN=127.0.0.1}
