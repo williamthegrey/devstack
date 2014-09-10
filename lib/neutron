@@ -186,7 +186,7 @@ PHYSICAL_NETWORK=${PHYSICAL_NETWORK:-}
 # port for external connectivity.
 #
 # Example: ``OVS_PHYSICAL_BRIDGE=br-eth1``
-OVS_PHYSICAL_BRIDGE=${OVS_PHYSICAL_BRIDGE:-}
+OVS_PHYSICAL_BRIDGE=${OVS_PHYSICAL_BRIDGE:-br-eth1}
 
 # With the linuxbridge plugin, if using VLANs for tenant networks,
 # or if using flat or VLAN provider networks, set in ``localrc`` to
