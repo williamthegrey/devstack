@@ -243,7 +243,8 @@ function uninstall() {
     sudo ovs-vsctl del-port $BR $IF
     sudo ip link set dev $BR down
     sudo ovs-vsctl del-br $BR
-    if sudo ovs-vsctl br-exists $BR; then
+    _status
+    if [ "$?" == "3" ]; then
         echo "Error 203: Removing $BR failed."
         return 203
     fi
