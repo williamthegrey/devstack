@@ -209,7 +209,7 @@ function install() {
 function uninstall() {
     # check status
     _status
-    if [ "$?" == "1" ] && ! sudo ovs-vsctl br-exists $BR; then
+    if [ "$?" == "1" ]; then
 		echo "Error 201: $EXEC is not currently installed."
 		return 201
     fi
@@ -238,6 +238,16 @@ function uninstall() {
 		return 204
 	fi
 
+    # remove $BR
+    echo "Removing $BR..."
+    sudo ovs-vsctl del-port $BR $IF
+    sudo ip link set dev $BR down
+    sudo ovs-vsctl del-br $BR
+    if sudo ovs-vsctl br-exists $BR; then
+        echo "Error 203: Removing $BR failed."
+        return 203
+    fi
+
 	# remove $BR_SCRIPT
 	echo "Removing $BR_SCRIPT..."
 	sudo rm -f /$SCRIPTS/$BR_SCRIPT
@@ -246,23 +256,14 @@ function uninstall() {
 	echo "Restoring $IF_SCRIPT..."
 	sudo cp $SCRIPTS/$IF_SCRIPT.backup /$SCRIPTS/$IF_SCRIPT
 	_status
-	if [ "$?" == "3" ] || [ "$?" == "2" ]; then
-		echo "Error 203: Restoring $IF_SCRIPT failed."
-		return 203
+	if [ "$?" == "2" ]; then
+		echo "Error 202: Restoring $IF_SCRIPT failed."
+		return 202
 	fi
 
     # restart network service
     echo "restarting network service..."
     sudo service network restart
-
-    # remove $BR
-    sudo ovs-vsctl del-port $BR $IF
-    sudo ip link set dev $BR down
-    sudo ovs-vsctl del-br $BR
-    if sudo ovs-vsctl br-exists $BR; then
-        echo "Error 202: Removing $BR failed."
-        return 202
-    fi
 
 	# return
 	echo "$EXEC is successfully uninstalled."
