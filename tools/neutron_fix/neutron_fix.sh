@@ -46,14 +46,18 @@ BR_PHY=$OVS_PHYSICAL_BRIDGE
 function help() {
     # display help information
     echo -e "NAME"
-    echo -e "\t$EXEC - $INTRO\n"
+    echo -e "\t$EXEC - $INTRO"
+    echo -e ""
     echo -e "SYNOPSIS"
     echo -e "\t$EXEC COMMAND"
-    echo -e "\t$EXEC [OPTIONS]\n"
-    echo -e "COMMANDS"
+    echo -e "\t$EXEC [OPTIONS]"
+    echo -e ""
+    echo -e "DESCRIPTION"
+    echo -e "\tCOMMAND is one of:"
     echo -e "\tstatus\t\t check if $EXEC is installed"
     echo -e "\tinstall\t\t install $EXEC"
     echo -e "\tuninstall\t uninstall $EXEC"
+    echo -e ""
     echo -e "OPTIONS"
     echo -e "\t--help\t\t display this help"
 
@@ -295,7 +299,6 @@ elif [ "$1" == '--help' ]; then
     exit $?
 else
     echo -e "Usage:\t$EXEC COMMAND"
-    echo -e "\t$EXEC [OPTIONS]"
     echo -e "Try '$EXEC --help' for more information."
     exit 0
 fi
