@@ -102,7 +102,7 @@ if [[ $DISTRO =~ (rhel6) ]]; then
     # uuid may not be generated because the service was never started (PR#598200),
     # causing Nova to stop later on complaining that ``/var/lib/dbus/machine-id``
     # does not exist.
-    sudo service messagebus restart
+    sudo service messagebus start
 
     # The following workarounds break xenserver
     if [ "$VIRT_DRIVER" != 'xenserver' ]; then
